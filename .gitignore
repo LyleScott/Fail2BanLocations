@@ -1,0 +1,6 @@
+*.pyc
+venv/*
+!venv/requirements.txt
+locations.json
+dats/GeoLiteCity.dat
+constants.py
