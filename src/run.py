@@ -2,9 +2,21 @@
 # Lyle Scott, III  // lyle@digitalfoo.net // Copyright 2013
 
 import json
+import os
 import sys
 
-import constants
+
+#path = os.path.dirname(os.path.realpath(__file__))
+#sys.path.insert(0, '%s/src' % path)
+
+try:
+    import constants
+except ImportError:
+    print '''Problem importing src/constants.py. Make sure
+src/constants.py.sample is copied to src/constants.py and is setup
+properly.'''
+    sys.exit(3)
+
 from parsers import ParserEmail
 from parsers import ParserLog
 
@@ -14,6 +26,13 @@ def usage():
     me = sys.argv[0]
     print 'USAGE: %s' % me
     sys.exit(1)
+
+
+def pre_checks():
+    if not os.path.exists('constants.py'):
+        print ('Copy constants.py.sample to constants.py and fill in the '
+            'appropriate options.')
+        exit(2)
 
 
 def get_parsers():
@@ -31,6 +50,7 @@ def get_parsers():
 
 def run(args):
     """Do work."""
+    pre_checks()
     with open('locations.json', 'w') as fp:
         fp.write('var locations = ')
         for parser in get_parsers():
