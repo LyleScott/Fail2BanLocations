@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+# Lyle Scott, III  // lyle@digitalfoo.net // Copyright 2013
 
 SITE="http://geolite.maxmind.com/download/geoip/database/"
 
@@ -7,7 +8,7 @@ if [ $(basename $curdir) != "dats" ]; then
     if [ -d dats ]; then
         pushd dats
     else
-        echo "Be in the dats directory."
+        echo "Be in the dats directory or its parent directory to run update.sh."
         exit 1
     fi
 fi
