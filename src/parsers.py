@@ -92,4 +92,21 @@ class ParserEmail(Parser):
 class ParserLog(Parser):
 
     def __init__(self):
-        super(ParserEmail, self).__init__()
+        super(ParserLog, self).__init__()
+        self.regex = constants.getConstant('LOG_IP_REGEX')
+
+    def extractIpsWithDates(self):
+        ips = []
+        for log in constants.getConstant('LOGS'):
+            with open(log) as fp:
+                ips.extend(re.findall(self.regex, fp.read()))
+
+        return [(ip[1], ip[0]) for ip in ips]
+
+    @classmethod
+    def run(cls):
+        parser = cls()
+        ips = parser.extractIpsWithDates()
+        locations = parser.get_locations(ips)
+
+        return super(ParserLog, parser).run(locations)

@@ -70,5 +70,5 @@ I do plan to finish a few things soon, though:
 differentiate which box was getting attacked if you wanted to use multiple
 log files or have >1 box sending fail2ban messages to the same inbox.
 * make the infowindow look better.
-* finish log parsing since email parsing it the only parser that works.
 * unittests... because engineering.
+* add "source" column in infowindow (email vs logfile)
