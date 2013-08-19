@@ -10,8 +10,8 @@ Automated Setup
 ---------------
 
 These need to be installed for the automated setup:
-    virtualenv
-    pip
+    * virtualenv
+    * pip
 
 Then you just execute the setup.sh file.
 
@@ -23,8 +23,8 @@ Manual Set Up
 -------------
 
 Install the folling Python libs:
-    pygeoip
-    python-dateutil
+    * pygeoip
+    * python-dateutil
 
 
 Example
