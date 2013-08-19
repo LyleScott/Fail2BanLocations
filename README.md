@@ -1,7 +1,8 @@
 Fail2BanGoogleMap
 =================
 
-Map the locations of hosts logged or emailed by fail2ban.
+Output the locations of hosts logged or emailed by fail2ban to a JSON file so
+that they can easily be mapped. See the below example for more info.
 
 I didn't create a proper installable module, so bare with me on the (still
 quick) setup process.
@@ -61,7 +62,7 @@ TODO
 ----
 
 I really don't plan to do too much more, unless I hear any interest otherwise.
-This was really just for run to see where folks were coming from that were in
+This was really just for fun to see where folks were coming from that were in
 my logs. I'll probably use the library in many other ways, anyways.
 
 I do plan to finish a few things soon, though:
