@@ -51,13 +51,16 @@ def get_parsers():
 def run(args):
     """Do work."""
     pre_checks()
+
+    allresults = []
+    for parser in get_parsers():
+        results = parser.run()
+        allresults.extend(list(results or []))
+
     with open('locations.json', 'w') as fp:
         fp.write('var locations = ')
-        for parser in get_parsers():
-            results = parser.run()
-            if results:
-                json.dump(list(results), fp)
-        fp.write(';')        
+        json.dump(allresults, fp)
+        fp.write(';')
 
 
 if __name__ == '__main__':
