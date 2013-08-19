@@ -53,6 +53,10 @@ leveraged as a simple example to map the IPs on a geographical map representing
 "clusters" of IPs where you can drill down to be more specific about the
 location. Basic Google Maps API foo, honestly.
 
+!(Fail2Ban Cluster Map Screenshot 1)[https://github.com/LyleScott/Fail2BanGoogleMap/blob/master/html/Fail2Ban_map1_screenshot.png]
+!(Fail2Ban Cluster Map Screenshot 2)[https://github.com/LyleScott/Fail2BanGoogleMap/blob/master/html/Fail2Ban_map2_screenshot.png]
+!(Fail2Ban Cluster Map Screenshot 3)[https://github.com/LyleScott/Fail2BanGoogleMap/blob/master/html/Fail2Ban_map3_screenshot.png]
+
 TODO
 ----
 
