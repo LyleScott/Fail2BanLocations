@@ -3,6 +3,7 @@
 import imaplib
 import email
 import re
+from glob import glob
 from operator import itemgetter
 
 import pygeoip
@@ -98,8 +99,9 @@ class ParserLog(Parser):
     def extractIpsWithDates(self):
         ips = []
         for log in constants.getConstant('LOGS'):
-            with open(log) as fp:
-                ips.extend(re.findall(self.regex, fp.read()))
+            for file in glob(log):
+                with open(log) as fp:
+                    ips.extend(re.findall(self.regex, fp.read()))
 
         return [(ip[1], ip[0]) for ip in ips]
 

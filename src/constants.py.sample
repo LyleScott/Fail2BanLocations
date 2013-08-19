@@ -3,7 +3,7 @@
 # COPY TO constants.py !
 
 constants = {
-    'EMAIL_ENABLE': True,
+    'EMAIL_ENABLE': False,
     'EMAIL_HOST': 'imap.gmail.com',
     'EMAIL_HOST_SSL': True,
     'EMAIL_USER': 'user@gmail.com',
@@ -14,7 +14,10 @@ constants = {
     'LOG_ENABLE': False,
     'LOGS': [
         # paths to a log file or a glob that represents multiple logs.
+        '/var/log/fail2ban.log',
+        #'/var/log/fail2ban/*.log',
         ],
+    'LOG_IP_REGEX': r'(\d\d\d\d-\d\d-\d\d) .* Ban ([0-9]+(?:\.[0-9]+){3})',
 
     'GEOIP_COUNTRY': 'dats/GeoIP.dat',
     'GEOIP_CITY': 'dats/GeoLiteCity.dat',
