@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Lyle Scott, III  // lyle@digitalfoo.net // Copyright 2013
 
-FILE="http://google-maps-utility-library-v3.googlecode.com/svn/trunk/markerclusterer/src/markerclusterer_compiled.js"
+FILE="http://google-maps-utility-library-v3.googlecode.com/svn/trunk/markerclustererplus/src/markerclusterer_packed.js"
 
 curdir=`pwd`
 if [ $(basename $curdir) != "html" ]; then
