@@ -47,8 +47,23 @@ The dictionary has the following keys:
 * country_name
 
 I have provided [html/example.html](https://github.com/LyleScott/Fail2BanGoogleMap/blob/master/html/example.html)
-that uses the [Google Map API (v3)](https://developers.google.com/maps/documentation/javascript/) and the
+which reads locations.json into the [Google Map API (v3)](https://developers.google.com/maps/documentation/javascript/) with the
 [markerclustererplus javascript library](http://google-maps-utility-library-v3.googlecode.com/svn/trunk/markerclustererplus/)
-as a simple example to map the IPs on a geographical map representing
+leveraged as a simple example to map the IPs on a geographical map representing
 "clusters" of IPs where you can drill down to be more specific about the
 location. Basic Google Maps API foo, honestly.
+
+TODO
+----
+
+I really don't plan to do too much more, unless I hear any interest otherwise.
+This was really just for run to see where folks were coming from that were in
+my logs. I'll probably use the library in many other ways, anyways.
+
+I do plan to finish a few things soon, though:
+* show the ip/hostname of the box that logged the IP "hit" so you can
+differentiate which box was getting attacked if you wanted to use multiple
+log files or have >1 box sending fail2ban messages to the same inbox.
+* make the infowindow look better.
+* finish log parsing since email parsing it the only parser that works.
+* unittests... because engineering.
