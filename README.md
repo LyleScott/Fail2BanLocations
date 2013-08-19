@@ -46,7 +46,8 @@ The dictionary has the following keys:
 * country_code
 * country_name
 
-I have provided html/example.html that uses the Google Map API (v3) and the
+I have provided [html/example.html](https://github.com/LyleScott/Fail2BanGoogleMap/blob/master/html/example.html)
+that uses the [Google Map API (v3)](https://developers.google.com/maps/documentation/javascript/) and the
 [markerclustererplus javascript library](http://google-maps-utility-library-v3.googlecode.com/svn/trunk/markerclustererplus/)
 as a simple example to map the IPs on a geographical map representing
 "clusters" of IPs where you can drill down to be more specific about the
