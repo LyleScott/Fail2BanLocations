@@ -13,9 +13,9 @@ if [ $(basename $curdir) != "html" ]; then
     fi
 fi
 
-#if [ $(type -P curl) ]; then
-#    curl -O $FILE
-if [ $(type -P wget) ]; then
+if [ $(type -P curl) ]; then
+    curl -O $FILE
+elif [ $(type -P wget) ]; then
     wget -N $FILE
 elif [ $(type -P fetch) ]; then
     fetch $FILE
