@@ -3,35 +3,29 @@ Fail2BanGoogleMap
 
 Map the locations of hosts logged or emailed by fail2ban.
 
-Initial Set Up
---------------
+I didn't create a proper installable module, so bare with me on the (still
+quick) setup process.
 
-You can either install pygeoip and python-dateutil for your main python
-installation or you can use a segregated virtual environment and install via
-the requirements file I supplied.
+Automated Setup
+---------------
 
-```bash
-virtualenv --no-site-packages venv
-pip install -r venv/requirements.txt
-```
+These need to be installed for the automated setup:
+    virtualenv
+    pip
 
-Set Up
-------
-
-I haven't set up an installable package or anything, so just run it "manually".
-
-Skip the source line if you are not using the virtual environment.
+Then you just execute the setup.sh file.
 
 ```bash
-source venv/bin/activate
-export PYTHONPATH=$PYTHONPATH:src
+./setup.sh
 ```
 
-Edit the constants file.
+Manual Set Up
+-------------
 
-```bash
-./run.py
-```
+Install the folling Python libs:
+    pygeoip
+    python-dateutil
+
 
 Example
 -------
