@@ -29,7 +29,7 @@ def usage():
 
 
 def pre_checks():
-    if not os.path.exists('constants.py'):
+    if not os.path.exists('src/constants.py'):
         print ('Copy constants.py.sample to constants.py and fill in the '
             'appropriate options.')
         exit(2)
