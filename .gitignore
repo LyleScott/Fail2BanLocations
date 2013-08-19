@@ -4,3 +4,4 @@ venv/*
 locations.json
 src/constants.py
 dats/GeoLiteCity.dat
+*.swp
