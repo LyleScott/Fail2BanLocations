@@ -1,4 +1,4 @@
-Fail2BanGoogleMap
+Fail2BanLocations
 =================
 
 Output the locations of hosts logged or emailed by fail2ban to a JSON file so
