@@ -72,3 +72,4 @@ log files or have >1 box sending fail2ban messages to the same inbox.
 * make the infowindow look better.
 * unittests... because engineering.
 * add "source" column in infowindow (email vs logfile)
+* use openauth to auth to email. or atleast don't store password in plain text.
