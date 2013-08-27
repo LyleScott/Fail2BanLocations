@@ -28,7 +28,8 @@ def usage():
     sys.exit(1)
 
 
-def pre_checks():
+def sanity_checks():
+    """Sanity checks to make sure the world is OK."""
     if not os.path.exists('src/constants.py'):
         print ('Copy constants.py.sample to constants.py and fill in the '
             'appropriate options.')
@@ -36,7 +37,7 @@ def pre_checks():
 
 
 def get_parsers():
-    """Parse arguments."""
+    """Collect the proper parsers."""
     objs = []
 
     if constants.getConstant('EMAIL_ENABLE'):
@@ -50,7 +51,7 @@ def get_parsers():
 
 def run(args):
     """Do work."""
-    pre_checks()
+    sanity_checks()
 
     allresults = []
     for parser in get_parsers():
