@@ -65,6 +65,11 @@ I really don't plan to do too much more, unless I hear any interest otherwise.
 This was really just for fun to see where folks were coming from that were in
 my logs. I'll probably use the library in many other ways, anyways.
 
+EDIT: It looks like the fail2ban folks might create a 3rd party directory and
+this repository is making its way in there according to a pull request. So,
+I will be cleaning things up a bit and atleast documenting items more closely
+so someone can hack it easier.
+
 I do plan to finish a few things soon, though:
 * show the ip/hostname of the box that logged the IP "hit" so you can
 differentiate which box was getting attacked if you wanted to use multiple
