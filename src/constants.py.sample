@@ -2,22 +2,34 @@
 #
 # COPY TO constants.py !
 
+import re
+
 constants = {
     'EMAIL_ENABLE': False,
     'EMAIL_HOST': 'imap.gmail.com',
     'EMAIL_HOST_SSL': True,
     'EMAIL_USER': 'user@gmail.com',
-    'EMAIL_PASS': 'mypass',
+    'EMAIL_PASS': '',
     'EMAIL_SEARCH': '(HEADER Subject "[Fail2Ban] ssh: banned*")',
-    'EMAIL_IP_REGEX': r'The IP ([0-9]{1,3}(?:\.[0-9]+){3}) has just been banned by',
+    'EMAIL_IP_REGEX': re.compile(
+        r'The IP ([0-9]{1,3}(?:\.[0-9]+){3}) has just been banned .* against ([^.]+).'),
 
-    'LOG_ENABLE': False,
-    'LOGS': [
-        # paths to a log file or a glob that represents multiple logs.
+    'LOCALLOG_ENABLE': False,
+    'LOCALLOG_HOST': 'localhost',
+    'LOCALLOG_LOGS': [
+        # You can use paths for globs here.
         '/var/log/fail2ban.log',
         #'/var/log/fail2ban/*.log',
         ],
-    'LOG_IP_REGEX': r'(\d\d\d\d-\d\d-\d\d) .* Ban ([0-9]+(?:\.[0-9]+){3})',
+    'LOCALLOG_IP_REGEX': re.compile(
+        r'(\d\d\d\d-\d\d-\d\d).* \[(.*?)\] Ban ([0-9]+(?:\.[0-9]+){3})'),
+
+    'REMOTELOG_ENABLE': False,
+    'REMOTELOG_LOGS': [
+        'l@ls3.me:/var/log/fail2ban.log',
+        ],
+    'REMOTELOG_IP_REGEX': re.compile(
+        r'(\d\d\d\d-\d\d-\d\d).* \[(.*?)\] Ban ([0-9]+(?:\.[0-9]+){3})'),
 
     'GEOIP_COUNTRY': 'dats/GeoIP.dat',
     'GEOIP_CITY': 'dats/GeoLiteCity.dat',

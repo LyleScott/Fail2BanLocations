@@ -15,6 +15,7 @@ import constants
 class Parser(object):
     """The bare-bones base class for parses to be built from."""
 
+    SOURCE_TYPE = 'Unknown'
     KEYS = ['latitude', 'longitude', 'city', 'country_code', 'country_name']
 
     def __init__(self):
@@ -27,18 +28,22 @@ class Parser(object):
 
         Arguments:
           ips (sequence): A sequence of (ips, hit-date) tuples to iterate
-            through and look up the location for. 
+            through and look up the location for.
 
         Returns:
           A list of dicts containing the location info for each IP sorted by
             the hit-date in ascending order (most recent first).
         """
         locations = []
-        for ip, date_ in ips:
+        for date_, ip, service, source, source_type in ips:
             location = self.get_location(ip)
             location.update({
                 'ip': ip,
-                'date': parser.parse(date_).strftime('%Y-%m-%d')})
+                'date': parser.parse(date_).strftime('%Y-%m-%d'),
+                'service': service,
+                'source': source,
+                'source_type': source_type,
+            })
             locations.append(location)
         return sorted(locations, key=itemgetter('date'), reverse=True)
 
@@ -50,7 +55,7 @@ class Parser(object):
 
         Returns:
           A dict containing the IP information specified in KEYS.
-        """  
+        """
         record = self.geoip.record_by_addr(ip)
         return {key: record[key] for key in self.KEYS}
 
@@ -64,6 +69,8 @@ class Parser(object):
 class ParserEmail(Parser):
     """Parse hosts from an imap(s) inbox."""
 
+    SOURCE_TYPE = 'Email'
+
     def __init__(self):
         """Initialization."""
         super(ParserEmail, self).__init__()
@@ -76,7 +83,7 @@ class ParserEmail(Parser):
 
     def login(self):
         """Login to the imap(s) server with credentials.
-        
+
         Returns:
           A handle to the imap server connection.
         """
@@ -94,10 +101,10 @@ class ParserEmail(Parser):
         """Get the emails that satisfy the search criteria.
 
         Arguments:
-          handle ():
+          handle (imaplib_IMAP4[_SSL]): Handle to the imap connection.
 
         Returns:
-          ...
+          An iterator of email bodies.
         """
         handle.select('inbox')
         _, uids = handle.uid('search', self.search)
@@ -112,55 +119,76 @@ class ParserEmail(Parser):
         """"Extract the IP addresses from the emails.
 
         Arguments:
-          emails ():
+          emails (seq): A sequence of emails to extract IPs from.
 
-        Returns:  
-          ...
+        Returns:
+          An iterator of (date, ip, service) tuples.
         """
+        r = re.compile(r'<(.*)>')
+
         for email_ in emails:
             msg = email_.get_payload()
             date_ = email_['Date']
-            ip = re.search(self.regex, msg)
+
+            source = re.search(r, email_['From']).groups()
+            if not source:
+                source = 'unknown'
+            else:
+                source = source[0]
+
+            ip = re.search(self.regex, msg.replace('\n', ' '))
             if not ip:
                 # TODO: how to handle?
                 continue
-            yield (ip.groups()[0], date_)
+            ip, service = ip.groups()
+            yield (date_, ip, service, source, self.SOURCE_TYPE)
 
     @classmethod
     def run(cls):
-        """TODO"""
+        """Do work."""
         parser = cls()
         handle = parser.login()
         emails = parser.get_emails(handle)
-        ips = parser.extract_ips(emails)
-        locations = parser.get_locations(ips)
+        info = parser.extract_ips(emails)
+        locations = parser.get_locations(info)
 
         return super(ParserEmail, parser).run(locations)
 
 
-class ParserLog(Parser):
+class ParserLocalLog(Parser):
     """Parse hosts from fail2ban log files."""
+
+    SOURCE_TYPE = 'LocalLog'
 
     def __init__(self):
         """Initialization."""
-        super(ParserLog, self).__init__()
-        self.regex = constants.getConstant('LOG_IP_REGEX')
+        super(ParserLocalLog, self).__init__()
+        self.regex = constants.getConstant('LOCALLOG_IP_REGEX')
 
-    def extractIpsWithDates(self):
-        """TODO"""
-        ips = []
-        for log in constants.getConstant('LOGS'):
+    def extract_ips(self):
+        """Extract ips from fail2ban log files."""
+        info = []
+        for log in constants.getConstant('LOCALLOG_LOGS'):
             for file in glob(log):
                 with open(log) as fp:
-                    ips.extend(re.findall(self.regex, fp.read()))
+                    info.extend(re.findall(self.regex, fp.read()))
 
-        return [(ip[1], ip[0]) for ip in ips]
+        system = constants.getConstant('LOCALLOG_HOST')
+
+        yield [(data[0], data[2], data[1], system, self.SOURCE_TYPE)
+              for data in info]
 
     @classmethod
     def run(cls):
-        """TODO"""
+        """Do work."""
         parser = cls()
-        ips = parser.extractIpsWithDates()
+        ips = parser.extract_ips()
         locations = parser.get_locations(ips)
 
-        return super(ParserLog, parser).run(locations)
+        return super(ParserLocalLog, parser).run(locations)
+
+
+class ParserRemoteLog(ParserLocalLog):
+    """Parse hosts from remote fail2ban log files."""
+
+    SOURCE_TYPE = 'RemoteLog'

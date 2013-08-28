@@ -18,7 +18,8 @@ properly.'''
     sys.exit(3)
 
 from parsers import ParserEmail
-from parsers import ParserLog
+from parsers import ParserLocalLog
+from parsers import ParserRemoteLog
 
 
 def usage():
@@ -32,31 +33,43 @@ def sanity_checks():
     """Sanity checks to make sure the world is OK."""
     if not os.path.exists('src/constants.py'):
         print ('Copy constants.py.sample to constants.py and fill in the '
-            'appropriate options.')
+               'appropriate options.')
         exit(2)
 
 
 def get_parsers():
-    """Collect the proper parsers."""
+    """Collect the enabled parsers."""
     objs = []
 
     if constants.getConstant('EMAIL_ENABLE'):
         objs.append(ParserEmail)
 
-    if constants.getConstant('LOG_ENABLE'):
-        objs.append(ParserLog)
+    if constants.getConstant('LOCALLOG_ENABLE'):
+        objs.append(ParserLocalLog)
+
+    if constants.getConstant('REMOTELOG_ENABLE'):
+        objs.append(ParserRemoteLog)
 
     return objs
 
 
 def run(args):
-    """Do work."""
+    """Run the parsers and write a unique list of hit dates and hosts."""
     sanity_checks()
 
-    allresults = []
+    allresults = {}
+
     for parser in get_parsers():
-        results = parser.run()
-        allresults.extend(list(results or []))
+        results = parser.run() or []
+
+        for result in results:
+            key = (result['ip'], result['date'])
+            if key not in allresults:
+                allresults[key] = result
+
+    allresults = allresults.values()
+
+    print len(allresults), 'locations about to be parsed.'
 
     with open('locations.json', 'w') as fp:
         fp.write('var locations = ')
