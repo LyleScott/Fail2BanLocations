@@ -26,6 +26,7 @@ td, th {
     padding: 2px 4px;
     border-bottom: 1px solid #333;
     border-right: 1px solid #333;
+    white-space: nowrap;
 }
 
 
