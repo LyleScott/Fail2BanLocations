@@ -3,7 +3,7 @@ html, body {
 }
 
 body {
-    font-family: Arial;
+    font-family: "Lucida Console", Monaco, monospace;
     font-size: 11px;
     margin: 0;
     padding: 0;
@@ -14,12 +14,12 @@ th {
 }
 
 table {
-    font-size: 11px;
+    font-family: "Lucida Console", Monaco, monospace;
+    font-size: 12px;
     text-align: left;
-    width: 99%;
+    width: 100%;
     border-top: 1px solid #333;
     border-left: 1px solid #333;
-    margin-bottom: 4px;
 }
 
 td, th {
@@ -29,14 +29,19 @@ td, th {
     white-space: nowrap;
 }
 
-
-#map-container {
+div#map-container {
     width: 100%;
     height: 100%;
 }
 
-
-#map {
+div#map {
     width: 100%;
     height: 100%;
+}
+
+div#infowindow-wrapper {
+    width: 640px;
+    line-height:1.35;
+    overflow:hidden;
+    white-space:nowrap;
 }

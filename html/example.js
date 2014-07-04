@@ -11,7 +11,8 @@ function showInfoWindow(cluster) {
         center = this.getPosition();
     }
 
-    var tbl = '<table cellspacing="0" cellpadding="0" width="98%">' +
+    var tbl = '<div id="infowindow-wrapper">' +
+              '<table cellspacing="0" cellpadding="0">' +
               '  <tr>' +
               '    <th>&nbsp;</th>' +
               '    <th>IP</th>' +
@@ -20,11 +21,10 @@ function showInfoWindow(cluster) {
               '    <th>Service</th>' +
               '    <th>Source</th>' +
               '    <th>Dates</th>' +
-              '</tr>';
+              '  </tr>';
 
     for (var i = 0; i < markers.length; i++) {
         var data = markers[i].data;
-
         tbl += '<tr>' +
                '  <td>' + (i + 1) + '</td>' +
                '  <td>' + data['ip'] + '</td>' +
@@ -36,7 +36,8 @@ function showInfoWindow(cluster) {
                '</tr>';
     }
 
-    tbl += '</table>';
+    tbl += '</table>' +
+           '</div>';
 
     if (typeof infowindow != 'undefined') {
         infowindow.close();
