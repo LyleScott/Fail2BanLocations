@@ -38,27 +38,28 @@ def get_enabled_parsers():
         yield RemoteLogParser, constants.REMOTELOG_ARGS
 
 
-def run():
-    """Run the parsers and write a unique list of hit dates and hosts."""
-    shit = {}
-
-    for parser, parser_args in get_enabled_parsers():
+def get_parser_results(parsers):
+    infos = {}
+    for parser, parser_args in parsers:
         for args, kwargs in parser_args:
             for ip_info in parser(*args, **kwargs).run():
                 ip = ip_info.pop('ip')
                 date_ = ip_info.pop('date')
 
-                if ip not in shit:
-                    shit[ip] = (ip_info, [date_])
+                if ip not in ip_info:
+                    infos[ip] = (ip_info, [date_])
                 else:
-                    shit[ip][1].append(date_)
+                    infos[ip][1].append(date_)
+    return infos
 
-    with open('locations.json', 'w') as fp:
+
+def write_json(ip_info):
+    with open(constants.JSON_PATH, 'w') as fp:
         fp.write('var locations = ')
 
         infos = []
-        for ip in shit:
-            info, dates = shit[ip]
+        for ip in ip_info:
+            info, dates = ip_info[ip]
             info.update({
                 'ip': ip,
                 'dates': dates
@@ -69,8 +70,12 @@ def run():
         fp.write(';')
 
 
+def run():
+    """Run the parsers and write a unique list of hit dates and hosts."""
+    parsers = get_enabled_parsers()
+    ip_info = get_parser_results(parsers)
+    write_json(ip_info)
+
 
 if __name__ == '__main__':
-    print 'HI'
-    print run()
     run()

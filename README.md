@@ -7,17 +7,12 @@ that they can easily be mapped. See the below example for more info.
 I didn't create a proper installable module, so bare with me on the (still
 quick) setup process.
 
-Automated Setup
----------------
 
-These need to be installed for the automated setup:
-* virtualenv
-* pip
-
-Manual Setup
+Setup
 -------------
+pip install -r requirements.txt
 
-Install the folling Python libs:
+...or manually install:
 * pygeoip
 * python-dateutil
 
