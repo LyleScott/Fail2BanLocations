@@ -1,27 +1,17 @@
 #!/usr/bin/env bash
-# Lyle Scott, III  // lyle@digitalfoo.net // Copyright 2013
 
-SITE="http://geolite.maxmind.com/download/geoip/database/"
-
-curdir=`pwd`
-if [ $(basename $curdir) != "dats" ]; then
-    if [ -d dats ]; then
-        pushd dats
-    else
-        echo "Be in the dats directory or its parent directory to run update.sh."
-        exit 1
-    fi
-fi
+GEOIP_ADDR="http://geolite.maxmind.com/download/geoip/database/"
+script_dir="$(cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd)"
 
 if [ $(type -P curl) ]; then
-    curl $SITE/GeoLiteCity.dat.gz | gzip -d > GeoLiteCity.dat
+    curl $GEOIP_ADDR/GeoLiteCity.dat.gz | gzip -d > GeoLiteCity.dat
 elif [ $(type -P wget) ]; then
-    wget -O - $SITE/GeoLiteCity.dat.gz | gzip -d > GeoLiteCity.dat
+    wget -O - $GEOIP_ADDR/GeoLiteCity.dat.gz | gzip -d > GeoLiteCity.dat
 elif [ $(type -P fetch) ]; then
-    fetch -o - $SITE/GeoLiteCity.dat.gz | gzip -d > GeoLiteCity.dat
+    fetch -o - $GEOIP_ADDR/GeoLiteCity.dat.gz | gzip -d > GeoLiteCity.dat
 else
-    echo "Couldn't figure out how to automagically download the file."
-    echo "Down load the file manually and store in the 'dats' directory:"
-    echo "${SITE}/GeoLiteCity.dat.gz"
-    echo "...also, decompress it with 'gzip -d GeoLiteCity.dat.gz'"
+    echo "For some reason, the GeoIP dat files will not automagically download."
+    echo "Get the file manually at "
+    echo "${GEOIP_ADDR}/GeoLiteCity.dat.gz"
+    echo "Put the file in ${script_dir}."
 fi
