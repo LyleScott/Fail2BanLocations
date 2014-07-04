@@ -1,7 +1,6 @@
 *.pyc
-venv/*
-!venv/requirements.txt
 locations.json
 src/constants.py
 dats/GeoLiteCity.dat
 *.swp
+.idea

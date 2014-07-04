@@ -1,5 +1,3 @@
-# Lyle Scott, III  // lyle@digitalfoo.net // Copyright 2013
-
 import imaplib
 import email
 import re

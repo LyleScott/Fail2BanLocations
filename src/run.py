@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# Lyle Scott, III  // lyle@digitalfoo.net // Copyright 2013
 
 import json
 import os
